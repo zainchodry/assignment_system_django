@@ -1,0 +1,99 @@
+# ============================================
+# Django & Python .gitignore
+# ============================================
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# Migrations (optional – comment out if you want to track them)
+*/migrations/*
+!*/migrations/__init__.py
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# VSCode / IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Backup / temp files
+*.bak
+*.swp
+*.tmp
+
+# Compiled / packaged files
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# MyPy / Pylint
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+pylint-report.txt
+pylint.log
+
+# Logs
+logs/
+*.log
+
+# Media and uploads
+uploads/
+user_uploads/
+
+# ============================================
+# End of .gitignore
+# ============================================
