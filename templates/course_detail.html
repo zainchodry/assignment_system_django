@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+<style>
+  .course-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  .course-detail-container:hover {
+    transform: translateY(-5px);
+  }
+  .course-title {
+    font-size: 2rem;
+    color: #007bff;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  .course-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 25px;
+  }
+  .course-meta {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+  }
+  .enroll-btn {
+    padding: 10px 30px;
+    font-size: 1rem;
+    border-radius: 50px;
+  }
+  .btn-success {
+    background: linear-gradient(to right, #28a745, #218838);
+    border: none;
+  }
+  .btn-success:hover {
+    background: linear-gradient(to right, #218838, #1e7e34);
+  }
+  .btn-secondary {
+    background: linear-gradient(to right, #6c757d, #5a6268);
+    border: none;
+  }
+</style>
+
+<div class="course-detail-container">
+  <h2 class="course-title">{{ course.title }}</h2>
+  <p class="course-description">{{ course.description }}</p>
+
+  <div class="course-meta">
+    <strong>Instructor:</strong> {{ course.created_by.username }}<br>
+    <strong>Course ID:</strong> {{ course.id }}
+  </div>
+
+  {% if user.role == 'student' %}
+    {% if enrolled %}
+      <button class="btn btn-secondary enroll-btn" disabled>
+        <i class="bi bi-check-circle"></i> Already Enrolled
+      </button>
+    {% else %}
+      <a href="{% url 'enroll_course' course.id %}" class="btn btn-success enroll-btn">
+        <i class="bi bi-bookmark-plus"></i> Enroll Now
+      </a>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

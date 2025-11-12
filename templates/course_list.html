@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+<style>
+.courses-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 900px;
+  padding: 2.5rem;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  text-align: center;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 600;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+}
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list-group-item {
+  background: #f8f9fa;
+  border: none;
+  border-radius: 14px;
+  padding: 1.2rem 1.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #333;
+}
+
+.list-group-item:hover {
+  background: #eef4ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 117, 252, 0.2);
+}
+
+.list-group-item h5 {
+  font-weight: 600;
+  color: #2575fc;
+  margin-bottom: 0.4rem;
+}
+
+.list-group-item p {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.no-courses {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 2rem;
+}
+</style>
+
+<div class="courses-container">
+  <h2>📘 All Courses</h2>
+
+  {% if user.role == 'teacher' %}
+  <div class="text-center mb-4">
+    <a href="{% url 'create_course' %}" class="btn btn-primary">+ Create New Course</a>
+  </div>
+  {% endif %}
+
+  <div class="list-group">
+    {% for course in courses %}
+      <a href="{% url 'course_detail' course.id %}" class="list-group-item list-group-item-action">
+        <h5>{{ course.title }}</h5>
+        <p>{{ course.description|truncatechars:120 }}</p>
+      </a>
+    {% empty %}
+      <p class="no-courses">No courses available yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Create Course{% endblock %}
+{% block content %}
+<style>
+  .create-course-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .create-course-container:hover {
+    transform: translateY(-5px);
+  }
+
+  .create-course-container h2 {
+    color: #007bff;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-group label {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .form-control {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+  }
+
+  .btn-primary {
+    display: block;
+    width: 100%;
+    border: none;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    border-radius: 50px;
+    font-size: 1.1rem;
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(90deg, #0056b3, #003f88);
+    transform: translateY(-2px);
+  }
+
+  .form-note {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-top: 15px;
+  }
+</style>
+
+<div class="create-course-container">
+  <h2>Create a New Course</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.as_p }}
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Create Course</button>
+  </form>
+  <p class="form-note">Make sure to provide all required details before submitting.</p>
+</div>
+{% endblock %}

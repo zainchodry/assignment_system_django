@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<style>
+  /* Dashboard Container */
+  .dashboard-container {
+    margin-top: 40px;
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 40px;
+  }
+
+  h4 {
+    font-weight: 600;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border-left: 5px solid #007bff;
+    padding-left: 10px;
+  }
+
+  /* List group styling */
+  .list-group-item {
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .list-group-item:hover {
+    background-color: #f1f3f5;
+    transform: translateY(-2px);
+  }
+
+  /* Buttons */
+  .btn-success {
+    border-radius: 20px;
+    font-size: 0.9rem;
+    padding: 5px 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+  }
+
+  /* Table Styling */
+  .table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+
+  .table thead {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+  }
+
+  .table th {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+  }
+
+  .no-data {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .dashboard-container {
+      padding: 20px;
+    }
+
+    .btn-success {
+      float: none !important;
+      display: block;
+      margin-top: 10px;
+    }
+  }
+</style>
+
+<div class="dashboard-container">
+  <h2>🎓 Welcome, {{ user.username }}</h2>
+
+  <!-- Enrolled Courses -->
+  <h4>📘 Enrolled Courses</h4>
+  <ul class="list-group mb-3">
+    {% for c in enrolled_courses %}
+    <li class="list-group-item shadow-sm">
+      <i class="bi bi-book me-2 text-primary"></i> {{ c.title }}
+    </li>
+    {% empty %}
+    <li class="list-group-item text-muted text-center">No enrolled courses.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Upcoming Assignments -->
+  <h4>🕒 Upcoming Assignments</h4>
+  <ul class="list-group mb-3">
+    {% for a in upcoming_assignments %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <strong>{{ a.title }}</strong> — <small>{{ a.course.title }}</small><br>
+        <span class="text-muted">Due: {{ a.due_date }}</span>
+      </div>
+      <a href="{% url 'submit_assignment' a.id %}" class="btn btn-sm btn-success">Submit</a>
+    </li>
+    {% empty %}
+    <li class="list-group-item text-muted text-center">No upcoming assignments.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- My Submissions -->
+  <h4>📂 My Submissions</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Assignment</th>
+        <th>Course</th>
+        <th>Submitted At</th>
+        <th>Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in my_submissions %}
+      <tr>
+        <td>{{ s.assignment.title }}</td>
+        <td>{{ s.assignment.course.title }}</td>
+        <td>{{ s.submitted_at }}</td>
+        <td>
+          {% if s.grade %}
+            <span class="badge bg-success">{{ s.grade }}</span>
+          {% else %}
+            <span class="badge bg-secondary">Pending</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="no-data">No submissions yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

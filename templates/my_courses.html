@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}My Courses{% endblock %}
+{% block content %}
+<style>
+  .my-courses-container {
+    max-width: 900px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .my-courses-container:hover {
+    transform: translateY(-3px);
+  }
+
+  .my-courses-container h2 {
+    color: #007bff;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .list-group-item {
+    border: none;
+    background: #f8f9fa;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .list-group-item:hover {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .list-group-item a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+  }
+
+  .list-group-item a:hover {
+    color: white;
+  }
+
+  .no-courses {
+    text-align: center;
+    color: #777;
+    font-size: 1.1rem;
+    padding-top: 20px;
+  }
+
+  .btn-add-course {
+    display: inline-block;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: #fff;
+    border-radius: 50px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .btn-add-course:hover {
+    background: linear-gradient(90deg, #0056b3, #003f88);
+    transform: translateY(-2px);
+  }
+</style>
+
+<div class="my-courses-container">
+  <h2>My Courses</h2>
+
+  {% if user.role == 'teacher' %}
+  <div class="text-center mb-3">
+    <a href="{% url 'create_course' %}" class="btn-add-course">+ Add New Course</a>
+  </div>
+  {% endif %}
+
+  {% if courses %}
+  <ul class="list-group">
+    {% for course in courses %}
+    <li class="list-group-item">
+      <a href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
+      <span class="text-muted small">ID: {{ course.id }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="no-courses">No courses found. {% if user.role == 'teacher' %}Create your first course now!{% endif %}</p>
+  {% endif %}
+</div>
+{% endblock %}

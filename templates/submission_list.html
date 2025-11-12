@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block title %}Submissions{% endblock %}
+{% block content %}
+<style>
+  .submissions-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .submissions-container:hover {
+    transform: translateY(-3px);
+  }
+
+  .submissions-container h2 {
+    text-align: center;
+    color: #ffc107;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+
+  thead th {
+    background: #343a40;
+    color: #fff;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 8px 8px 0 0;
+    text-align: left;
+  }
+
+  tbody td {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    vertical-align: middle;
+    transition: all 0.2s ease-in-out;
+  }
+
+  tbody tr:hover td {
+    background: #e9ecef;
+    transform: translateY(-2px);
+  }
+
+  a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+  }
+
+  a:hover {
+    color: #0056b3;
+  }
+
+  .btn-warning {
+    background: linear-gradient(90deg, #ffc107, #e0a800);
+    border: none;
+    border-radius: 30px;
+    padding: 6px 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-warning:hover {
+    background: linear-gradient(90deg, #e0a800, #c69500);
+    transform: translateY(-2px);
+  }
+
+  .no-submissions {
+    text-align: center;
+    font-size: 1rem;
+    color: #777;
+    padding: 20px 0;
+  }
+</style>
+
+<div class="submissions-container">
+  <h2>Submissions for {{ assignment.title }}</h2>
+
+  {% if submissions %}
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Student</th>
+              <th>File</th>
+              <th>Grade</th>
+              <th>Feedback</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for s in submissions %}
+          <tr>
+              <td>{{ s.student.username }}</td>
+              <td><a href="{{ s.file.url }}" target="_blank">Download</a></td>
+              <td>{{ s.grade|default:"-" }}</td>
+              <td>{{ s.feedback|default:"-" }}</td>
+              <td><a href="{% url 'grade_submission' s.id %}" class="btn btn-warning btn-sm">Grade</a></td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  {% else %}
+  <p class="no-submissions">No submissions yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}Grade Submission{% endblock %}
+{% block content %}
+<style>
+  .grade-submission-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .grade-submission-container:hover {
+    transform: translateY(-3px);
+  }
+
+  .grade-submission-container h2 {
+    color: #ffc107;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .grade-submission-container p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+  }
+
+  .grade-submission-container a {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .grade-submission-container a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  .form-control, textarea.form-control {
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-control:focus, textarea.form-control:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 6px rgba(255, 193, 7, 0.3);
+  }
+
+  .btn-primary {
+    display: block;
+    width: 100%;
+    border: none;
+    background: linear-gradient(90deg, #ffc107, #e0a800);
+    border-radius: 50px;
+    font-size: 1.1rem;
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    margin-top: 15px;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(90deg, #e0a800, #c69500);
+    transform: translateY(-2px);
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .form-note {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-top: 15px;
+  }
+</style>
+
+<div class="grade-submission-container">
+  <h2>Grade Submission - {{ submission.student.username }}</h2>
+  <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+  <p><a href="{{ submission.file.url }}" target="_blank">📄 Download File</a></p>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">Grade</label>
+        <input type="text" name="grade" value="{{ submission.grade }}" class="form-control" placeholder="Enter grade (e.g., 95)">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Feedback</label>
+        <textarea name="feedback" class="form-control" placeholder="Enter feedback for the student">{{ submission.feedback }}</textarea>
+    </div>
+    <button class="btn btn-primary">Save Grade</button>
+  </form>
+  <p class="form-note">Provide a numeric grade and optional feedback for the student.</p>
+</div>
+{% endblock %}

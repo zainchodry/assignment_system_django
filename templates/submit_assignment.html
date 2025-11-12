@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Submit Assignment{% endblock %}
+{% block content %}
+<style>
+  .submit-assignment-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .submit-assignment-container:hover {
+    transform: translateY(-3px);
+  }
+
+  .submit-assignment-container h2 {
+    color: #28a745;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-group label {
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .form-control, .form-control-file {
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-control:focus, .form-control-file:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 6px rgba(40, 167, 69, 0.3);
+  }
+
+  .btn-success {
+    display: block;
+    width: 100%;
+    border: none;
+    background: linear-gradient(90deg, #28a745, #218838);
+    border-radius: 50px;
+    font-size: 1.1rem;
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    margin-top: 15px;
+  }
+
+  .btn-success:hover {
+    background: linear-gradient(90deg, #218838, #19692c);
+    transform: translateY(-2px);
+  }
+
+  .form-note {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-top: 15px;
+  }
+</style>
+
+<div class="submit-assignment-container">
+  <h2>Submit: {{ assignment.title }}</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.as_p }}
+    </div>
+    <button type="submit" class="btn btn-success">Upload Assignment</button>
+  </form>
+  <p class="form-note">Only PDF, DOCX, or ZIP files are allowed. Max size: 10MB.</p>
+</div>
+{% endblock %}
